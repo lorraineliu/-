@@ -54,20 +54,20 @@ def height(root):
     return max(height(root.left), height(root.right)) + 1
 
 # depth
-def depth(root):
+def depth(root, tree_height):
     if root is None:
         return 0
     if root.left is None and root.right is None:
-        return height1 - height(root)
-    return max(depth(root.left), depth(root.right)) - 1
+        return tree_height - height(root)
+    return max(depth(root.left, tree_height), depth(root.right, tree_height)) - 1
 
 # level
-def level(root):
+def level(root, tree_height):
     if root is None:
         return 0
     if root.left is None and root.right is None:
-        return height1 - height(root) + 1
-    return max(level(root.left), level(root.right)) - 1
+        return tree_height - height(root) + 1
+    return max(level(root.left, tree_height), level(root.right, tree_height)) - 1
 
 # BFS
 def bfs_order(root):
@@ -90,9 +90,9 @@ if __name__ == '__main__':
     root1 = create_BTree(root,vals, 0)
     height1 = height(root1)
     print "height: %d" % height1
-    depth1 = depth(root1)
+    depth1 = depth(root1, height1)
     print "depth: %d" % depth1
-    level1 = level(root1)
+    level1 = level(root1, height1)
     print "level: %d" % level1
     pre_order(root1)
     in_order(root1)
