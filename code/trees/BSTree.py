@@ -78,7 +78,7 @@ def min_bstree(root):
         q = q.lnode
     return root.val
 
-#根节点的前继为BSTreeNode()
+# 根节点的前继为BSTreeNode()
 def pre_node_bstree(root, val):
     if root is None:
         return
@@ -96,7 +96,7 @@ def pre_node_bstree(root, val):
             current = current.rnode
     return pre_ret
 
-#叶子节点的后继节点为BSTreeNode()
+# 叶子节点的后继节点为BSTreeNode()
 def post_node_bstree(root, val):
     if root is None:
         return
@@ -114,20 +114,59 @@ def post_node_bstree(root, val):
     return post_ret
 
 
+# 不支持重复节点出现
+def delete_bstree(root, val):
+    if root is None:
+        return
+    pre = root
+    cur = root
+    while cur is not None:
+        if val < cur.val:
+            pre = cur
+            cur = cur.lnode
+        else:
+            if val == cur.val:
+                if not cur.lnode and not cur.rnode:
+                    pre.rnode = None
+                    pre.lnode = None
+                elif cur.lnode and not cur.rnode:
+                    pre.rnode = cur.lnode
+                elif cur.rnode and not cur.lnode:
+                    pre.rnode = cur.rnode
+                else:
+                    ppmin = cur
+                    p_cur = cur.rnode
+                    if p_cur.lnode is None:
+                        ppmin.rnode = p_cur.rnode
+                    while p_cur.lnode is not None:
+                        ppmin = p_cur
+                        p_cur = p_cur.lnode
+                    cur.val = p_cur.val
+                    ppmin.lnode = None
+            pre = cur
+            cur= cur.rnode
+    return root
+
+
 if __name__ == '__main__':
-    data1 = [1, 1, 3, 2, 5, 4, 3, 5]
-    root1 = create_bstree(data=data1)
+    # data1 = [1, 1, 3, 2, 5, 4, 3, 5]
+    # root1 = create_bstree(data=data1)
     # in_order(root)
     # val1 = 1
     # print search_bstree(root1, val1)
     # print max_bstree(root1)
     # print min_bstree(root1)
-    data2 = [1, 2, 3, 4, 5, 3, 3]
-    root2 = create_bstree(data=data2)
-    val2 = 1
-    pres = pre_node_bstree(root2, val2)
-    post = post_node_bstree(root2, val2)
+    # data2 = [1, 2, 3, 4, 5, 3, 3]
+    # root2 = create_bstree(data=data2)
+    # val2 = 1
+    # pres = pre_node_bstree(root2, val2)
+    # post = post_node_bstree(root2, val2)
     # for p in pres:
     #     print p.val if p and p.val else 'None', p.lnode.val if p and p.lnode else 'None', p.rnode.val if p and p.rnode else 'None'
-    for p in post:
-        print p.val if p and p.val else 'None', p.lnode.val if p and p.lnode else 'None', p.rnode.val if p and p.rnode else 'None'
+    # for p in post:
+    #     print p.val if p and p.val else 'None', p.lnode.val if p and p.lnode else 'None', p.rnode.val if p and p.rnode else 'None'
+    data3 = [1, 3, 4, 13, 2, 7, 8, 9, 6, 5, 10]
+    val3 = 8
+    root3 = create_bstree(data=data3)
+    del_root = delete_bstree(root3, val3)
+    in_order(del_root)
