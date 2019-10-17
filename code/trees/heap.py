@@ -25,7 +25,7 @@ class BigHeap(object):
             max_position = i
             if i*2 < len(self.heap) and self.heap[i] < self.heap[i*2]:
                 max_position = i*2
-            if i*2+1 < len(self.heap) and self.heap[i] < self.heap[i*2+1]:
+            if i*2+1 < len(self.heap) and self.heap[i] < self.heap[i*2+1] and self.heap[max_position] < self.heap[2*i+1]: # 堆里有相同的数字
                 max_position = i*2+1
             if max_position == i:
                 break
@@ -67,9 +67,9 @@ class SmallHeap(object):
     def heapify(self, i):
         while True:
             min_pos = i
-            if i*2 < len(self.heap[i]) and self.heap[i] > self.heap[i*2]:
+            if i*2 < len(self.heap) and self.heap[i] > self.heap[i*2]:
                 min_pos = i*2
-            if i*2+1 < len(self.heap[i] and self.heap[i] > self.heap[i*2+1]):
+            if i*2+1 < len(self.heap) and self.heap[i] > self.heap[i*2+1] and self.heap[min_pos] > self.heap[i*2+1]:# 堆里有相同的数字
                 min_pos = i*2+1
             if min_pos == i:
                 break
